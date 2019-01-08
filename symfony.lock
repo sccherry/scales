@@ -1,4 +1,7 @@
 {
+    "ianring/php-music-tools": {
+        "version": "dev-master"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
