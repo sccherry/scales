@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Scale {{ scale.id }}</h1>
+
+<dl>
+    {% if scale.names is not null %}
+        <dt>Names</dt>
+        <dd>{{ scale.names|join(', ') }}</dd>
+    {% endif %}
+
+    <dt>Tones</dt>
+    <dd>{{ scale.length }}</dd>
+
+    <dt>Pitch Class Set</dt>
+    <dd>{{ scale.tones|join(', ') }}</dd>
+    
+    <dt>Forte Number</dt>
+    <dd>{{ scale.forte }}</dd>
+
+    <dt>Rotational Symmetry</dt>
+    <dd>
+        {% if scale.symmetries is not null %}
+            {{ scale.symmetries|join(', ') }} semitones
+        {% else %}
+            none
+        {% endif %}
+    </dd>
+
+    <dt>Palindromic</dt>
+    <dd>{{ scale.isPalindromic ? 'yes' : 'no' }}</dd>
+
+    <dt>Hemitonia</dt>
+    <dd>{{ scale.hemitonics|length }}</dd>
+
+    <dt>Cohemitonia</dt>
+    <dd>{{ scale.cohemitonics|length }}</dd>
+
+    <dt>Imperfections</dt>
+    <dd>{{ scale.imperfections|length }}</dd>
+
+    {% if scale.modes is not null %}
+        <dt>Modes</dt>
+        {% for mode in scale.modes %}
+            <dd>
+                <a href="{{ url('scale', { id: mode }) }}">{{ mode }}</a>
+            </dd>
+        {% endfor %}
+    {% endif %}
+
+    <dt>Prime</dt>
+    <dd>
+        {% if scale.isPrime %}
+            yes
+        {% else %}
+            <a href="{{ url('scale', { 'id': scale.prime }) }}">{{ scale.prime }}</a>
+        {% endif %}
+    </dd>
+
+    <dt>Chirality</dt>
+    <dd>
+        {% if scale.isChiral %}
+            <a href="{{ url('scale', { 'id': scale.enantiomorph }) }}">{{ scale.inverse }}</a>
+        {% else %}
+            no
+        {% endif %}
+    </dd>
+
+    <dt>Deep Scale</dt>
+    <dd>{{ scale.isDeep ? 'yes' : 'no' }}</dd>
+
+    <dt>Inverval Vector</dt>
+    <dd>{{ scale.intervalVector|join('') }}</dd>
+
+    <dt>Spectra Variation</dt>
+    <dd>{{ scale.spectraVariation|round(3) }}</dd>
+
+    <dt>Myhill Property</dt>
+    <dd>{{ scale.hasMyhill ? 'yes' : 'no' }}</dd>
+
+    <dt>Coherence</dt>
+    <dd>{{ scale.isCoherent ? 'yes' : 'no' }}</dd>
+
+    <dt>Heliotonic</dt>
+    <dd>{{ scale.isHeliotonic ? 'yes' : 'no' }}</dd>
+
+    <dt>Negative</dt>
+    <dd>
+        <a href="{{ url('scale', { 'id': scale.negative }) }}">{{ scale.negative }}</a>
+    </dd>
+
+    <dt>Inverse</dt>
+    <dd>
+        <a href="{{ url('scale', { 'id': scale.inverse }) }}">{{ scale.inverse }}</a>
+    </dd>
+
+    <dt>Nearby Scales</dt>
+    {% for neighbor in scale.neighbors %}
+        <dd>
+            <a href="{{ url('scale', { 'id': neighbor }) }}">{{ neighbor }}</a>
+        </dd>
+    {% endfor %}
+</dl>
+{% endblock %}

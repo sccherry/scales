@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Scales</h1>
+
+<ul>
+    {% for scale in scales %}
+        <li>
+            <a href="{{ url('scale', { 'id': scale }) }}">{{ scale }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

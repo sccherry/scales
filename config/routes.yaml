@@ -1,3 +1,18 @@
 index:
   path: /
   controller: App\Controller\DefaultController::index
+scales:
+  path: /scales.{_format}
+  controller: App\Controller\ScaleController::list
+  defaults:
+    _format: html
+  requirements:
+    _format: html|json
+scale:
+  path: /scales/{id}.{_format}
+  controller: App\Controller\ScaleController::show
+  defaults:
+    _format: html
+  requirements:
+    _format: html|json
+    id: '\d+'
