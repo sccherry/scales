@@ -109,7 +109,7 @@ class Scale implements JsonSerializable
 
     public function getNormal()
     {
-        if ($this->isScale()) {
+        if ($this->scale->hasRootTone()) {
             return $this->id();
         }
 
