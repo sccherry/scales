@@ -8,9 +8,14 @@ class ScaleController extends BaseController
 {
     public function list()
     {
-        $data = [
-            'scales' => range(0, 4095),
-        ];
+        $scales = [];
+
+        foreach (range(0, 4095) as $id)
+        {
+            $scales[$id] = new Scale($id);
+        }
+
+        $data['scales'] = $scales;
 
         return $this->render('scale/list.html.twig', $data);
     }

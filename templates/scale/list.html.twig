@@ -6,7 +6,7 @@
 <ul>
     {% for scale in scales %}
         <li>
-            <a href="{{ url('scale', { 'id': scale }) }}">{{ scale }}</a>
+            <a href="{{ url('scale', { 'id': scale.id }) }}">{{ scale.id }}</a>
         </li>
     {% endfor %}
 </ul>
