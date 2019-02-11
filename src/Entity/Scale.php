@@ -62,8 +62,15 @@ class Scale implements JsonSerializable
         }
         else
         {
+            $normal = $this->getNormal();
+
+            if ($normal === 0)
+            {
+                return null;
+            }
+
             $original = $this->scale->scale;
-            $this->scale->scale = $this->getNormal();
+            $this->scale->scale = $normal;
             $pattern = $this->scale->intervalPattern();
             $this->scale->scale = $original;
 
@@ -116,12 +123,13 @@ class Scale implements JsonSerializable
 
     public function getNeighbors()
     {
-        return $this->scale->neighbours();
+        return $this->nullIfEmpty($this->scale->neighbours());
     }
 
     public function getNormal()
     {
-        if ($this->scale->hasRootTone()) {
+        if ($this->scale->hasRootTone() || $this->id() === 0)
+        {
             return $this->id();
         }
 
@@ -145,7 +153,7 @@ class Scale implements JsonSerializable
 
     public function getTones()
     {
-        return $this->scale->getTones();
+        return $this->nullIfEmpty($this->scale->getTones());
     }
 
     public function getTritonics()
