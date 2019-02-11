@@ -36,7 +36,8 @@ class Scale implements JsonSerializable
     
     public function getEnantiomorph()
     {
-        if ($this->isChiral()) {
+        if ($this->isChiral())
+        {
             return $this->scale->enantiomorph()->scale;
         }
 
@@ -55,9 +56,12 @@ class Scale implements JsonSerializable
 
     public function getIntervalPattern()
     {
-        if ($this->scale->hasRootTone()) {
+        if ($this->scale->hasRootTone())
+        {
             return $this->scale->intervalPattern();
-        } else {
+        }
+        else
+        {
             $original = $this->scale->scale;
             $this->scale->scale = $this->getNormal();
             $pattern = $this->scale->intervalPattern();
@@ -249,7 +253,8 @@ class Scale implements JsonSerializable
 
     protected function nullIfEmpty($result)
     {
-        if (count($result) === 0) {
+        if (count($result) === 0)
+        {
             return null;
         }
 

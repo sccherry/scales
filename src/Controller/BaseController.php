@@ -12,7 +12,8 @@ class BaseController extends AbstractController
         $format = $request->get('_format');
         $accept = $request->headers->get('accept');
 
-        if ($format === 'json' || strpos($accept, 'application/json') !== false) {
+        if ($format === 'json' || strpos($accept, 'application/json') !== false)
+        {
             return $this->json($parameters);
         }
 
