@@ -70,7 +70,30 @@
     <dd>{{ scale.isDeep ? 'yes' : 'no' }}</dd>
 
     <dt>Inverval Vector</dt>
-    <dd>{{ scale.intervalVector|join('') }}</dd>
+    <dd>
+        <em>
+            {%- for key, value in { 'p': 4, 'm': 3, 'n': 2, 's': 1, 'd': 0, 't': 5 } -%}
+                {%- if scale.intervalVector[value] > 0 -%}
+                    {{- key -}}
+                {%- endif -%}
+
+                {%- if scale.intervalVector[value] > 1 -%}
+                    <sup>{{ scale.intervalVector[value] }}</sup>
+                {%- endif -%}
+            {%- endfor -%}
+        </em>
+    </dd>
+
+    <dt>Distribution Spectra</dt>
+    <dd>
+        {% for key, value in scale.distributionSpectra %}
+            {{ '<' ~ key ~ '> = {' ~ value|join(',') ~ '}' }}
+
+            {% if not loop.last %}
+                <br>
+            {% endif %}
+        {% endfor %}
+    </dd>
 
     <dt>Spectra Variation</dt>
     <dd>{{ scale.spectraVariation|round(3) }}</dd>
