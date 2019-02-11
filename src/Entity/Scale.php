@@ -98,7 +98,15 @@ class Scale implements JsonSerializable
 
     public function getNames()
     {
-        return $this->scale->name(true);
+        $names = $this->scale->name(true);
+        $zeitler = $this->getZeitler();
+
+        if ($zeitler !== null && !in_array($zeitler, $names))
+        {
+            $names[] = $zeitler;
+        }
+
+        return $this->nullIfEmpty($names);
     }
 
     public function getNegative()
@@ -259,5 +267,17 @@ class Scale implements JsonSerializable
         }
 
         return $result;
+    }
+
+    private function getZeitler()
+    {
+        require('../vendor/ianring/php-music-tools/src/PHPMusicTools/classes/Utils/zeitlerScaleNames.php');
+        
+        if (isset($zeitler[$this->id()]))
+        {
+            return $zeitler[$this->id()];
+        }
+
+        return null;
     }
 }
