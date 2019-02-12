@@ -7,7 +7,7 @@ scales:
   defaults:
     _format: html
   requirements:
-    _format: html|json
+    _format: html|json|csv
 scale:
   path: /scales/{id}.{_format}
   controller: App\Controller\ScaleController::show

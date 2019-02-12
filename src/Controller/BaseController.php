@@ -16,7 +16,25 @@ class BaseController extends AbstractController
         {
             return $this->json($parameters);
         }
+        elseif ($format === 'csv')
+        {
+            return $this->csv($parameters, $request->get('path'));
+        }
 
         return parent::render($view, $parameters, $response);
+    }
+
+    protected function csv($data, $filename = 'export.csv') 
+    {
+        $serializer = $this->get('serializer');
+
+        $data = $serializer->serialize($data, 'csv');
+
+        $response = new Response();
+        $response->setContent($data);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+        return $response;
     }
 }
