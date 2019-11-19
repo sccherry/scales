@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends AbstractController
 {
-    public function render(string $view, array $parameters = [], Response $response = null): Response
+    protected function renderResponse(string $view, array $parameters = [], Response $response = null): Response
     {
         $request = $this->get('request_stack')->getCurrentRequest();
         $format = $request->get('_format');
@@ -21,7 +21,7 @@ class BaseController extends AbstractController
             return $this->csv($parameters, $request->get('path'));
         }
 
-        return parent::render($view, $parameters, $response);
+        return $this->render($view, $parameters, $response);
     }
 
     protected function csv($data, $filename = 'export.csv') 

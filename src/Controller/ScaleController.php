@@ -17,7 +17,7 @@ class ScaleController extends BaseController
 
         $data['scales'] = $scales;
 
-        return $this->render('scale/list.html.twig', $data);
+        return $this->renderResponse('scale/list.html.twig', $data);
     }
 
 
@@ -29,6 +29,6 @@ class ScaleController extends BaseController
             'scale' => $scale,
         ];
 
-        return $this->render('scale/show.html.twig', $data);
+        return $this->renderResponse('scale/show.html.twig', $data);
     }
 }

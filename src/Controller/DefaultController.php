@@ -13,6 +13,6 @@ class DefaultController extends BaseController
             ],
         ];
 
-        return $this->render('index.html.twig', $data);
+        return $this->renderResponse('index.html.twig', $data);
     }
 }
