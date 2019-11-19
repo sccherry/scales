@@ -1,4 +1,6 @@
 {
+  "name": "sccherry/scales",
+  "description": "A music theory Symfony application.",
   "type": "project",
   "license": "proprietary",
   "require": {
