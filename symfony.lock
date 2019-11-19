@@ -1,4 +1,10 @@
 {
+    "clue/graph": {
+        "version": "v0.9.1"
+    },
+    "graphp/graphviz": {
+        "version": "v0.2.2"
+    },
     "ianring/php-music-tools": {
         "version": "dev-master"
     },
