@@ -6,17 +6,15 @@ use JsonSerializable;
 class Scale implements JsonSerializable
 {
     protected $scale;
-    protected $pcSet;
 
     public function __construct(int $scale)
     {
         $this->scale = new \ianring\Scale($scale, 'C');
-        $this->pcSet = new \ianring\PitchClassSet($this->scale->scale);
     }
 
     public function id()
     {
-        return $this->scale->scale;
+        return $this->scale->set->bits;
     }
 
     public function length()
@@ -31,14 +29,14 @@ class Scale implements JsonSerializable
 
     public function getDistributionSpectra()
     {
-        return $this->pcSet->spectrum();
+        return $this->scale->set->spectrum();
     }
     
     public function getEnantiomorph()
     {
         if ($this->isChiral())
         {
-            return $this->scale->enantiomorph()->scale;
+            return $this->scale->enantiomorph()->set->bits;
         }
 
         return null;
@@ -46,7 +44,7 @@ class Scale implements JsonSerializable
 
     public function getForte()
     {
-        return $this->pcSet->forteNumber();
+        return $this->scale->set->forteNumber();
     }
 
     public function getImperfections()
@@ -69,10 +67,10 @@ class Scale implements JsonSerializable
                 return null;
             }
 
-            $original = $this->scale->scale;
-            $this->scale->scale = $normal;
+            $original = $this->id();
+            $this->scale->set->bits = $normal;
             $pattern = $this->scale->intervalPattern();
-            $this->scale->scale = $original;
+            $this->scale->set->bits = $original;
 
             return $pattern;
         }
@@ -80,10 +78,10 @@ class Scale implements JsonSerializable
 
     public function getInverse()
     {
-        $original = $this->scale->scale;
+        $original = $this->id();
         $this->scale->invert();
-        $inverse = $this->scale->scale;
-        $this->scale->scale = $original;
+        $inverse = $this->id();
+        $this->scale->set->bits = $original;
 
         return $inverse;
     }
@@ -105,15 +103,7 @@ class Scale implements JsonSerializable
 
     public function getNames()
     {
-        $names = $this->scale->name(true);
-        $zeitler = $this->getZeitler();
-
-        if ($zeitler !== null && !in_array($zeitler, $names))
-        {
-            $names[] = $zeitler;
-        }
-
-        return $this->nullIfEmpty($names);
+        return $this->scale->name(true);
     }
 
     public function getNegative()
@@ -143,7 +133,7 @@ class Scale implements JsonSerializable
 
     public function getSpectraVariation()
     {
-        return $this->pcSet->spectraVariation();
+        return $this->scale->set->spectraVariation();
     }
 
     public function getSymmetries()
@@ -173,12 +163,12 @@ class Scale implements JsonSerializable
 
     public function isCoherent()
     {
-        return $this->pcSet->isCoherent();
+        return $this->scale->set->isCoherent();
     }
 
     public function isDeep()
     {
-        return $this->pcSet->isDeepScale();
+        return $this->scale->set->isDeepScale();
     }
 
     public function isHeliotonic()
@@ -223,7 +213,7 @@ class Scale implements JsonSerializable
 
     public function hasMyhill()
     {
-        return $this->pcSet->hasMyhillProperty();
+        return $this->scale->set->hasMyhillProperty();
     }
 
     public function jsonSerialize()
@@ -275,17 +265,5 @@ class Scale implements JsonSerializable
         }
 
         return $result;
-    }
-
-    private function getZeitler()
-    {
-        require('../vendor/ianring/php-music-tools/src/PHPMusicTools/classes/Utils/zeitlerScaleNames.php');
-        
-        if (isset($zeitler[$this->id()]))
-        {
-            return $zeitler[$this->id()];
-        }
-
-        return null;
     }
 }
